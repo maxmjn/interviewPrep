@@ -1,0 +1,112 @@
+#login-link .els p{
+    position: absolute;
+    top: 10px;
+    right: 30%;
+    color: black;
+}
+
+.disabled p{
+    color: #999;
+}
+
+#login-link b{
+    font-weight: normal;
+    color: #fff !important;
+}
+.swagger-ui-wrap ul#resources li.resource {
+    border-bottom: 0px solid #dddddd;
+}
+.swagger-ui-wrap{
+    max-width: none;
+    margin-left: 20px;
+    margin-right: 20px;
+}
+#version p{
+    display: block;
+}
+#message-bar{
+    display: block;
+}
+#header a#logo{
+    color: #333;
+    background: none;
+    font-size: 2em;
+    padding: 20px 0 20px 0px;
+}
+#header {
+    background-color: #29abe1 !important;
+    border-bottom: 4px solid #29abe1;
+    padding-left: 0px;
+}
+.swagger-ui-wrap a {
+    color: #29abe1;
+}
+ul.endpoints{
+    margin-left: 9%;
+}
+div.heading h2{
+    color: #333 !important;
+    font-weight: normal !important;
+}
+div.heading h2 a {
+    color: #29abe1 ! important;
+}
+div.heading h2 a:hover {
+    color: #29abe1  ! important;
+}
+.info_description {
+    padding-bottom: 26px;
+}
+.info_description {
+    padding-bottom: 35px !important;
+}
+span.propDesc, span.propVals{
+    display: block !important;
+}
+.signature-container > .description{
+    display: block;
+    overflow: auto;
+    max-height: 200px;
+    border: 1px solid #0f6ab4;
+    padding: 10px;
+}
+.swagger-section .swagger-ui-wrap {
+    max-width: 92% !important;
+}
+
+.swagger-section .swagger-ui-wrap a img {
+    display: none;
+}
+
+html {
+    background: url('') no-repeat center center fixed;
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
+}
+
+.error
+{
+    background-color: #ff7c87;
+    height: 30px;
+}
+.success
+{
+    background-color: #70aa10;
+    height: 30px;
+}
+
+#header a#logo1 {
+    font-size: 1.5em;
+    font-weight: bold;
+    text-decoration: none;
+    background: transparent url(logo_small.png) no-repeat left center;
+    padding: 20px 0 20px 40px;
+    color: white;
+}
+
+.table_1 table, th, td {
+    border: 1px solid black;
+    border-collapse: collapse;
+}

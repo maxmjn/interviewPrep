@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<persistence xmlns="http://xmlns.jcp.org/xml/ns/persistence"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/persistence
+             http://xmlns.jcp.org/xml/ns/persistence/persistence_2_1.xsd"
+  version="2.1">
+  <persistence-unit name="Student_details">
+
+    <class>com.myProject.daoTest.Student</class>
+
+    <properties>
+      <property name="javax.persistence.jdbc.driver" value="org.h2.Driver" />
+      <property name="javax.persistence.jdbc.url" value="jdbc:h2:mem:testdb" />
+      <property name="javax.persistence.jdbc.albumDao" value="sa" />
+      <property name="javax.persistence.jdbc.password" value="" />
+
+      <!--https://docs.jboss.org/hibernate/orm/5.2/userguide/html_single/Hibernate_User_Guide.html#configurations-hbmddl-->
+      <!-- Automatically drop then create table -->
+      <!--<property name="hibernate.hbm2ddl.auto" value="create"/>-->
+      <!--<property name="hibernate.hbm2ddl.auto" value="update" />-->
+
+      <!-- print out sql  -->
+      <property name="hibernate.show_sql" value="true"/>
+    </properties>
+
+  </persistence-unit>
+</persistence>

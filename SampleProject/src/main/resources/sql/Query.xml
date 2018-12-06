@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE properties SYSTEM "http://java.sun.com/dtd/properties.dtd">
+<properties>
+  <comment>Queries</comment>
+
+  <entry key="albumUsers">
+    SELECT * FROM USER
+  </entry>
+
+  <entry key="albumUser_ByName">
+    SELECT * FROM USER
+    WHERE upper(NAME) = upper(:name)
+  </entry>
+</properties>

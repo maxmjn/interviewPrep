@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Oauth2 Admin</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script><!DOCTYPE html>
+
+    <link rel="icon" type="image/png" href="/doc/images/favicon-32x32.png" sizes="32x32" />
+    <link rel="icon" type="image/png" href="/doc/images/favicon-16x16.png" sizes="16x16" />
+    <link href='/doc/css/typography.css' media='screen' rel='stylesheet' type='text/css'/>
+    <link href='/doc/css/reset.css' media='screen' rel='stylesheet' type='text/css'/>
+    <link href='/doc/css/screen.css' media='screen' rel='stylesheet' type='text/css'/>
+    <link href='/doc/css/reset.css' media='print' rel='stylesheet' type='text/css'/>
+    <link href='/doc/css/print.css' media='print' rel='stylesheet' type='text/css'/>
+
+    <!-- Custom CSS-->
+    <link href='/oauth2/custom.css' media='screen' rel='stylesheet' type='text/css'/>
+
+    <script>
+        var clientId = '093c0f82-cb75-4cf7-9dd9-65eea5c9558a';  //replaced by terraform for prod
+        var identity_host = 'CHANGE_ME/oauth2/authorize';  //replaced by terraform for prod
+        var realm = 'CHANGE_ME';
+        //unlike Swagger index.html window.authorization is not getting intialized so initialized
+        //without this initialization handleOIDCLogin()-> handleLogout() fails
+        window.authorizations = {};
+        function qualifyURL(url) {
+          var a = document.createElement('a');
+          a.href = url;
+          return a.href;
+        }
+        var qp = null;
+        if(window.location.hash) {
+          qp = location.hash.substring(1);
+        }
+        else {
+          qp = location.search.substring(1);
+        }
+        qp = qp ? JSON.parse('{"' + qp.replace(/&/g, '","').replace(/=/g,'":"') + '"}',
+                function(key, value) {
+                  return key===""?value:decodeURIComponent(value) }
+        ):{}
+
+        if (qp) {
+          var accessToken = qp['access_token'];
+          if (accessToken) {
+            localStorage.setItem('accessToken', accessToken);
+          }
+          if (window.opener) {
+            //window.swaggerUi = swaggerUI;
+            //window.authorizations.add("oauth2", new ApiKeyAuthorization("Authorization", "Bearer " + accessToken, "header"));
+            window.close();
+          }
+        }
+    </script>
+
+</head>
+<body>
+
+
+<div id="message-bar" class="swagger-ui-wrap">&nbsp;</div>
+
+<div id="login-link" class="swagger-ui-wrap">
+
+    <a class="els" onclick="handleOIDCLogin(clientId,identity_host,realm);return false" href="#">
+        <p><b>Click Here To Login</b></p>
+    </a>
+    <label class="error">Not Logged In, please log in!</label>
+</div>
+
+
+<div id="main" class="container">
+    <div class="well">
+        <h1>OAuth2 Admin Console </h1>
+        <p>Create, Update, Delete and Search oauth2 clients</p>
+        <span class="label label-success">Create</span>
+        <span class="label label-warning">Update</span>
+        <span class="label label-danger">Delete</span>
+        <span class="label label-primary">Search</span>
+        <span class="label label-info">Access Token</span>
+    </div>
+
+
+    <div id="search">
+        <span class="label label-primary">Search</span><br/><br/>
+        <form role="form" name="search-form" id="search-form" novalidate="novalidate"
+              action="" method=""> <!-- method in ajax -->
+            <div class="form-group">
+                <label for="clientId-search">Client Id</label>
+                    <input class="form-control" type="text" id="clientId-search" name="clientId-search" placeholder="clientId"/>
+            </div>
+            <!--<div class="form-group">-->
+                <!--<label for="accessToken-search">Access Token</label>-->
+                    <!--<input class="form-control" type="text" id="accessToken-search" name="accessToken-search" placeholder="accessToken"/>-->
+            <!--</div>-->
+            <div class="form-group">
+                <label for="displayName-search">Display Name</label>
+                    <input class="form-control" type="text" id="displayName-search" name="displayName-search" placeholder="Display Name"/>
+            </div>
+            <div id="search-ajaxloader"></div>
+            <div id="search-message-panel">
+                <button class="btn btn-info" id="search-btn" data-name="search">
+                    <span class="glyphicon glyphicon-search"></span> Search
+                </button>
+                <div id="search-msg-highlight"></div>
+                <div id="search-msg"></div>
+            </div>
+        </form>
+    </div>
+<br/>
+    <div id="create">
+        <span class="label label-success">Create</span><br/><br/>
+        <form role="form" name="create-form" id="create-form" novalidate="novalidate"
+              action="" method=""> <!-- method in ajax -->
+            <div class="form-group">
+                <label for="userName">User Name</label>
+                <input class="form-control" type="text" id="userName" name="userName" placeholder="User Name of the client"/>
+            </div>
+            <div class="form-group">
+                <label for="json-create">JSON body</label>
+                <textarea id="json-create" name="json-create" class="form-control" style="min-width: 30%; min-height: 120px"></textarea>
+            </div>
+            <div id="create-ajaxloader"></div>
+            <div id="create-message-panel">
+                <button class="btn btn-info" id="create-btn" data-name="create">
+                    <span class="glyphicon glyphicon-pencil"></span> Create
+                </button>
+                <div id="create-msg-highlight"></div>
+                <div id="create-msg"></div>
+            </div>
+        </form>
+    </div>
+<br/>
+    <div id="accessToken">
+        <span class="label label-info">Access Token</span><br/><br/>
+        <form role="form" name="accessToken-form" id="accessToken-form" novalidate="novalidate"
+              action="" method=""> <!-- method in ajax -->
+
+            <div class="form-group">
+                <label for="json-accessToken">JSON body</label>
+                <textarea id="json-accessToken" name="json-accessToken" class="form-control" style="min-width: 30%; min-height: 120px"></textarea>
+            </div>
+            <div id="accessToken-ajaxloader"></div>
+            <div id="accessToken-message-panel">
+                <div><mark><i>warning: available ONLY for testing. To TURN ON this feature needs update to app properties</i></mark></div>
+                <button class="btn btn-info" id="accessToken-btn" data-name="accessToken">
+                    <span class="glyphicon glyphicon-dashboard"></span> AccessToken
+                </button>
+                <div id="accessToken-msg-highlight"></div>
+                <div id="accessToken-msg"></div>
+            </div>
+        </form>
+    </div>
+    <br/>
+
+    <div id="update">
+        <span class="label label-warning">Update</span><br/><br/>
+        <form role="form" name="update-form" id="update-form" novalidate="novalidate"
+              action="" method=""> <!-- method in ajax -->
+            <div class="form-group">
+                <label for="clientId-update">client Id</label>
+                <input class="form-control" type="text" id="clientId-update" name="clientId-update" placeholder="clientId"/>
+            </div>
+            <!--<div class="form-group">-->
+            <!--<label for="accessToken">Access Token</label>-->
+            <!--<input class="form-control" type="text" id="accessToken" name="accessToken" placeholder="accessToken"/>-->
+            <!--</div>-->
+            <div class="form-group">
+                <label for="json-update">JSON body</label>
+                <textarea id="json-update" name="json-update" class="form-control" style="min-width: 30%; min-height: 120px"></textarea>
+            </div>
+            <div id="update-ajaxloader"></div>
+            <div id="update-message-panel">
+                <button class="btn btn-info" id="update-btn" data-name="update">
+                    <span class="glyphicon glyphicon-edit"></span> Update
+                </button>
+                <div id="update-msg-highlight"></div>
+                <div id="update-msg"></div>
+            </div>
+        </form>
+    </div>
+<br/>
+
+    <div id="delete">
+        <span class="label label-danger">Delete</span><br/><br/>
+        <form role="form" name="delete-form" id="delete-form" novalidate="novalidate"
+              action="" method=""> <!-- method in ajax -->
+            <div class="form-group">
+                <label for="clientId-delete">client Id</label>
+                <input class="form-control" type="text" id="clientId-delete" name="clientId-delete" placeholder="clientId"/>
+            </div>
+            <!--<div class="form-group">-->
+            <!--<label for="accessToken">Access Token</label>-->
+            <!--<input class="form-control" type="text" id="accessToken" name="accessToken" placeholder="accessToken"/>-->
+            <!--</div>-->
+            <div id="delete-ajaxloader"></div>
+            <div id="delete-message-panel">
+                <button class="btn btn-info" id="delete-btn" data-name="delete">
+                    <span class="glyphicon glyphicon-trash"></span> InActivate
+                </button>
+                <div id="delete-msg-highlight"></div>
+                <div id="delete-msg"></div>
+            </div>
+        </form>
+    </div>
+
+    <br/><br/>
+    <div id="experiment">
+        <div>
+            <span class="label label-default">Different OAuth2 flows
+            </span>
+        </div>
+        <br/><br/>
+        <a href="" class="oauth2_implicit">
+            <p><b>OAuth2 implicit flow (available in dev/qa)</b></p>
+        </a>
+        <mark>
+            <pre><code>
+                        <i>To use implicit flow, create new oauth2 client, update HTML/JS code
+                            Requires openIdConnect albumDao. For example "demo" in dev.
+                            To experiment
+                            --------------
+                            1.Create Oauth client with redirectURI [dev/localhost]/reporting-services/oauthRedirect
+                            2.Inspect this link
+                            3.Click this link, key in albumDao credentials, give consent,
+                            4.Navigates to reporting-services/openapi, URL shows access token
+                        </i>
+            </code></pre>
+        </mark>
+        <br/><br/>
+        <a href="" class="oauth2_reflow">
+            <p><b>OAuth2 code reflow (available in dev/qa)</b></p>
+        </a>
+        <mark>
+            <pre><code>
+            <i>To use code reflow(secure), create new oauth2 client, update app properties
+                with clientId/secret. Requires openIdConnect albumDao.  For example "demo" in dev
+                To experiment
+                --------------
+                1.Create Oauth client with redirectURI [dev/localhost]/reporting-services/oauthRedirect
+                2.Update app properties with clientId/secret
+                3.Update oauth2.js to update this link
+                3.Click this link, key in albumDao credentials, give consent,
+                4.Navigates to reporting-services/openapi, server would have embedded the accessToken into oauth2.js
+            </i>
+            </code></pre>
+        </mark>
+    </div>
+
+</div> <!-- container div-->
+
+<script src='/oauth2/constants.js' type='text/javascript'></script>
+<script src='/oauth2/main.js' type='text/javascript'></script>
+
+<iframe id="authFrame" src="about:blank;" border="0" style="display:none;"></iframe>
+<script>
+    setIFrameUrl = function () {
+        $("#authFrame").attr("src", getAuthUrl(clientId, identity_host, realm));
+    };
+
+    $(document).ready(function () {
+        setInterval(function () {
+        setIFrameUrl();
+        }, 8 * 60 * 1000);
+
+        $(window).bind('storage', function (e) {
+          if (e.originalEvent.key === 'accessToken') {
+            handleLogout();
+            setOIDCHeader("Bearer " + e.originalEvent.newValue);
+          }
+        });
+    });
+</script>
+</body>
+</html>

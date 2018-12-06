@@ -1,0 +1,38 @@
+
+jersey:
+  scheme: http
+  config-id: sample-1
+  version: @project.version@
+  contact: muralijan20@gmail.com
+  title: RESTful-UI-DB app
+
+# Spring MVC dispatcher servlet path. Needs to be different than Jersey's
+# to enable/disable Actuator endpoints access (/info, /health, ...)
+server:
+  servlet-path: /
+
+# Jersey dispatcher servlet
+spring.jersey:
+  application-path: /api
+
+# Enabling H2 Console
+spring.h2:
+    console:
+      enabled: true
+#Data Source Configuration - Hikari CP
+# leak-detection-threshold Default:0 (disabled), Lowest acceptable value for enabling leak detection is 2000 (2 secs)
+spring:
+  datasource:
+    hikari:
+      connectivity-test-query:
+      max-lifetime: 60000
+      leak-detection-threshold: 30000
+      pool-name: myH2pool
+      url: jdbc:h2:mem:testdb
+      username: sa
+      password:
+      type: com.zaxxer.hikari.HikariDataSource
+  jpa:
+    show-sql: true
+    # Hibernate ddl auto (create, create-drop, validate, update)
+#    hibernate.ddl-auto: update

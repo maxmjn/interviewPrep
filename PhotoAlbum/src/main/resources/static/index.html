@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>RESTful App</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script><!DOCTYPE html>
+
+    <link rel="icon" type="image/png" href="/images/favicon-32x32.png" sizes="32x32" />
+    <link rel="icon" type="image/png" href="/images/favicon-16x16.png" sizes="16x16" />
+    <link href='/app/css/typography.css' media='screen' rel='stylesheet' type='text/css'/>
+    <link href='/app/css/reset.css' media='screen' rel='stylesheet' type='text/css'/>
+    <link href='/app/css/screen.css' media='screen' rel='stylesheet' type='text/css'/>
+    <link href='/app/css/print.css' media='print' rel='stylesheet' type='text/css'/>
+    <link href='/app/css/custom.css' media='screen' rel='stylesheet' type='text/css'/>
+    <link href='/app/css/loader.css' media='screen' rel='stylesheet' type='text/css'/>
+</head>
+<body>
+
+<div id="main" class="container">
+
+    <div id="loadData">
+        <span>Load data from </span>
+        <a href="https://jsonplaceholder.typicode.com">https://jsonplaceholder.typicode.com</a>
+        <br/><br/>
+        <form role="form" name="loadData-form" id="loadData-form" novalidate="novalidate"
+              action="" method=""> <!-- method in ajax -->
+            <div id="loadData-ajaxloader"></div>
+            <div id="loadData-message-panel">
+                <button id="loadData-btn" data-name="loadData">Load Data</button>
+                <div id="loadData-msg-highlight"></div>
+                <div id="loadData-msg"><table></table></div>
+            </div>
+        </form>
+    </div>
+    <br/>
+
+    <div id="getUsers">
+        <form role="form" name="getUsers-form" id="getUsers-form" novalidate="novalidate" action="" method=""> <!-- method in ajax -->
+            <div id="getUsers-ajaxloader"></div>
+            <div id="getUsers-message-panel">
+                <button id="getUsers-btn" data-name="getUsers">List Users</button>
+                <div id="getUsers-msg-highlight"></div>
+                <div id="getUsers-msg"></div>
+            </div>
+            <div id="getUsers-list"><table></table></div>
+        </form>
+    </div>
+    <br/>
+
+    <div id="search">
+        <form role="form" name="search-form" id="search-form" novalidate="novalidate" action="" method=""> <!-- method in ajax -->
+            <div class="form-group">
+                <label for="displayName-search">User Name</label>
+                <input type="text" id="displayName-search" name="displayName-search" placeholder="username"/>
+            </div>
+            <div id="search-ajaxloader"></div>
+            <div id="search-message-panel">
+                <button id="search-btn" data-name="search"> Get User Albums </button>
+                <div id="search-msg-highlight"></div>
+                <div id="search-data"><table></table></div>
+            </div>
+        </form>
+    </div>
+    <br/>
+    <span>
+        <label>Create a new User + Album + Photo </label>
+    </span>
+    <div id="create">
+        <form role="form" name="create-form" id="create-form" novalidate="novalidate" action="" method=""> <!-- method in ajax -->
+            <div id="create-ajaxloader"></div>
+            <br/>
+            <div id="create-message-panel">
+                <button id="create-btn" data-name="create"> Create </button>
+                <div id="create-msg-highlight"></div>
+                <div id="create-data"><ul></ul></div>
+            </div>
+            <br/>
+            <div class="form-group">
+                <label for="username-create">User Name</label>
+                <input type="text" id="username-create" name="username-create" placeholder="username"/>
+                <br/><label for="name-create">Name</label>
+                <input type="text" id="name-create" name="name-create" placeholder="Name"/>
+                <br/><label for="email-create">Email</label>
+                <input type="text" id="email-create" name="email-create" placeholder="email"/>
+                <br/><label for="album-create">AlbumTitle</label>
+                <input type="text" id="album-create" name="album-create" placeholder="album"/>
+                <br/><label for="photo-create">PhotoTitle</label>
+                <input type="text" id="photo-create" name="photo-create" placeholder="photoTitle"/>
+                <br/><label for="thumbnail-create">ThumbNail URL</label>
+                <input type="text" id="thumbnail-create" name="thumbnail-create" placeholder="thumbnail url"/>
+                <br/><label for="photourl-create">Actual size photo URL</label>
+                <input type="text" id="photourl-create" name="photourl-create" placeholder="photourl"/>
+            </div>
+        </form>
+    </div>
+<br/>
+
+</div> <!-- container div-->
+
+<script src='/app/constants.js' type='text/javascript'></script>
+<script src='/app/app.js' type='text/javascript'></script>
+
+<script>
+    $(document).ready();
+</script>
+
+</body>
+</html>

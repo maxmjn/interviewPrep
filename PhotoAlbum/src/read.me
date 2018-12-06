@@ -1,0 +1,47 @@
+## Build
+- Java8 required please make sure your OS path has Java8
+- Maven `mvn clean install`
+- Spring Boot Test based integration tests.
+- Run `java -jar target/PhotoAlbum-1.0.jar`
+
+## Web app
+- http://localhost:8080/
+
+## Health Check
+- http://localhost:8080/api/v1/health/pingpong?value=ping
+- should be replaced with DropWizard or similar Metrics libraries to get
+better in-sights of the application
+
+## Swagger doc
+- http://localhost:8080/doc/index.html
+- Load data using "Admin" api to reload/clear data
+- CRUD apis
+
+## H2-console
+- http://localhost:8080/h2-console/
+
+## Design
+- Web + App Server
+    <br>`spring-boot-starter-web` provides web server (Tomcat default)
+    <br>`spring-boot-starter-jersey` for RESTful resource vs. Spring MVC
+    that comes bundled with spring-boot-starter-web.
+- Swagger documentation for APIs
+- Logging
+    <br>slf4j + logback
+- Static files
+    <br> index.html is auto-detected by Spring
+- Persistence
+    <br> - `spring-boot-starter-data-jpa` for JPA api
+    <br> - h2 in-memory DB. Note `application.yml` set to show h2-console.
+    <br> - When application starts the logs show `hikari` being used
+    as DBCP(DB Connection Pool)
+
+## Improvements
+- Data from api can be loaded async using Spring's `@EnableAsync` `@EnableScheduling`
+ provide cron time using `@Scheduled` and async `@Async`
+- REST api service PhotoAlbumSvc methods could take POJO vs multiple params.
+- JPA
+    - since we search by username; it should be made primary key along with id column
+    - can be paginated for Photos
+- UI more elegant. Latest frameworks vs. basic DOM manipulation
+- UI shows only "Load data" option. Show other options only if data is available.

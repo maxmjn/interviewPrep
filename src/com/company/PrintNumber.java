@@ -17,14 +17,14 @@ import org.junit.runners.Parameterized.Parameter;
 import org.junit.runners.Parameterized.Parameters;
 
 /*
- * Implement the function Solution.Formatter.execute() such that for a given
+ * Implement the function PrintNumber.Formatter.execute() such that for a given
  * number will return a human readable string version of that number.  You can
  * safely assume that the number will be a positive, non-zero long integer.
  *
- * See Solution.data() for inputs and expected outputs.
+ * See PrintNumber.data() for inputs and expected outputs.
  */
 @RunWith(Parameterized.class)
-public class Solution {
+public class PrintNumber {
 
   @Parameters
   public static Collection<Object[]> data() {
@@ -177,7 +177,7 @@ public class Solution {
   }
 
   public static void main(final String[] args) {
-    JUnitCore.main(Solution.class.getCanonicalName());
+    JUnitCore.main(PrintNumber.class.getCanonicalName());
   }
 }
 

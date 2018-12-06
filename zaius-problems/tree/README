@@ -1,0 +1,28 @@
+Binary Tree
+
+The task is to build a binary tree using a breadth first insertion method, and
+then print out a depth first traversal of the values.
+
+  1. Read in the comma delimited file `input.txt`. We will use these values to
+     construct the binary tree.
+
+  2. Build a binary tree using a breadth first insertion method. Your complete
+     tree should look like this...
+
+
+                                    1
+                            --------|--------
+                            |               |
+                            2               3
+                        ----|----       ----|----
+                        |       |       |       |
+                        4       5       6       7
+                      --|--   --|--   --|--   --|--
+                      |   |   |   |   |   |   |   |
+                      8   9  10  11  12  13  14  15
+
+
+  3. Perform a depth first traversal of the tree printing out one value per
+     line.
+
+The output of your solution should match the contents of `output.txt`.

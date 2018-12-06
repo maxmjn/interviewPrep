@@ -1,0 +1,19 @@
+SQL
+
+First, read a csv file `people.csv` representing a database table, `people`.
+Then output the answers to the following SQL queries:
+
+  1. select round(avg(age), 1) from people
+     (overall average age, rounded to 1 decimal place)
+
+  2. select state, count(*) from people group by state order by count(*) desc
+     (number of people in each state, ordered most to least)
+
+  3. select state, round(avg(age), 0) from people group by state order by avg(age)
+     (average age per state, ordered smallest to largest average)
+
+  4. select state, round(avg(age), 0) from people where age > 15 AND age < 55 group by state order by state
+     (average age per state for people between 15 and 55 years old, ordered by state name)
+
+Output a blank line after each question so the output of your solution is formatted the same
+as the contents of `output.txt`.

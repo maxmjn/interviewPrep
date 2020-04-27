@@ -7,6 +7,26 @@
     <groupId>com.company</groupId>
     <artifactId>MavenExamples</artifactId>
     <version>0.0.1-SNAPSHOT</version>
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <configuration>
+                    <source>7</source>
+                    <target>7</target>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <configuration>
+                    <source>8</source>
+                    <target>8</target>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
     <packaging>pom</packaging>
 
     <name>MavenExamples Parent</name>
@@ -14,6 +34,9 @@
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <java.version>1.8</java.version>
+        <maven.compiler.target>1.8</maven.compiler.target>
+        <maven.compiler.source>1.8</maven.compiler.source>
         <junit.version>4.12</junit.version>
 <!--        <spring.version>4.3.5.RELEASE</spring.version>-->
     </properties>

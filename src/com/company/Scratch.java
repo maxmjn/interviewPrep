@@ -1,8 +1,5 @@
 package com.company;
 
-import java.util.Arrays;
-import java.util.Comparator;
-
 public class Scratch {
 
   // Decimal declaration and possible chars are [0-9]

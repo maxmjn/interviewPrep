@@ -1,20 +1,16 @@
 package com.company;
 
-import static java.util.Collections.unmodifiableMap;
-import static org.junit.Assert.assertEquals;
-
-import java.util.Arrays;
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Map;
 import org.junit.Test;
 import org.junit.runner.JUnitCore;
 import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
 import org.junit.runners.Parameterized.Parameter;
 import org.junit.runners.Parameterized.Parameters;
+
+import java.util.*;
+
+import static java.util.Collections.unmodifiableMap;
+import static org.junit.Assert.assertEquals;
 
 /*
  * Implement the function PrintNumber.Formatter.execute() such that for a given
@@ -126,7 +122,7 @@ public class PrintNumber {
     private static final Map<Integer, String> TENS;
 
     static {
-      final Map<Integer, String> ones = new HashMap<>();
+      final Map<Integer, String> ones = new HashMap<Integer, String>();
       ones.put(1, "One");
       ones.put(2, "Two");
       ones.put(3, "Three");
@@ -137,7 +133,7 @@ public class PrintNumber {
       ones.put(8, "Eight");
       ones.put(9, "Nine");
 
-      final Map<Integer, String> teens = new HashMap<>();
+      final Map<Integer, String> teens = new HashMap<Integer, String>();
       teens.put(10, "Ten");
       teens.put(11, "Eleven");
       teens.put(12, "Twelve");
@@ -149,7 +145,7 @@ public class PrintNumber {
       teens.put(18, "Eighteen");
       teens.put(19, "Nineteen");
 
-      final Map<Integer, String> tens = new HashMap<>();
+      final Map<Integer, String> tens = new HashMap<Integer, String>();
       tens.put(2, "Twenty");
       tens.put(3, "Thirty");
       tens.put(4, "Forty");

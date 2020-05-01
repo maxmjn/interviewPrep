@@ -31,7 +31,7 @@ import java.util.*;
 // Add any extra import statements you may need here
 
 
-class Main {
+class EncryptedWords {
 
     // Add any helper functions you may need here
 
@@ -40,16 +40,6 @@ class Main {
         // Write your code here
         return null;
     }
-
-
-
-
-
-
-
-
-
-
 
     // These are the tests we use to determine if the solution is correct.
     // You can add your own at the bottom, but they are otherwise not editable!
@@ -90,6 +80,6 @@ class Main {
     }
 
     public static void main(String[] args) {
-        new Main().run();
+        new EncryptedWords().run();
     }
 }

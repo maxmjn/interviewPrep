@@ -23,10 +23,26 @@ class ReverseToMakeEqual {
 
     // Add any helper functions you may need here
 
-
     boolean areTheyEqual(int[] array_a, int[] array_b) {
         // Write your code here
-        return false;
+        if(array_a.length != array_b.length) return false;
+
+        Map<Integer, Integer> mapA = new HashMap<>();
+        Map<Integer, Integer> mapB = new HashMap<>();
+        for(int i=0; i < array_b.length; i++){
+            //put array element and count
+            mapA.put(array_a[i], mapA.getOrDefault(array_a[i], 1) + 1);
+            mapB.put(array_b[i], mapB.getOrDefault(array_b[i], 1) + 1);
+        }
+        int key;
+        int val;
+        for(Map.Entry<Integer,Integer> entry : mapA.entrySet()){
+            key=entry.getKey();
+            val=entry.getValue();
+            if(mapB.containsKey(key) && mapB.get(key)==val) continue;
+            else return false;
+        }
+        return true;
     }
 
     // These are the tests we use to determine if the solution is correct.

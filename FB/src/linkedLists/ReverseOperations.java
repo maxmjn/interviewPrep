@@ -27,7 +27,7 @@ import java.util.*;
 // Add any extra import statements you may need here
 
 
-class Main {
+class ReverseOperations {
 
     class Node {
         int data;
@@ -120,6 +120,6 @@ class Main {
     }
 
     public static void main(String[] args) {
-        new Main().run();
+        new ReverseOperations().run();
     }
 }

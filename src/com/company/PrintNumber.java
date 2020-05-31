@@ -32,89 +32,105 @@ public class PrintNumber {
         {15, "Fifteen"},
         {19, "Nineteen"},
         {20, "Twenty"},
-        // { 28,      "Twenty-eight" },
-        // { 32,      "Thirty-two" },
-        // { 47,      "Forty-seven" },
-        // { 53,      "Fifty-three" },
-        // { 64,      "Sixty-four" },
-        // { 76,      "Seventy-six" },
-        // { 100,     "One hundred" },
-        // { 201,     "Two hundred and one" },
-        // { 205,     "Two hundred and five" },
-        // { 209,     "Two hundred and nine" },
-        // { 310,     "Three hundred and ten" },
-        // { 315,     "Three hundred and fifteen" },
-        // { 319,     "Three hundred and nineteen" },
-        // { 420,     "Four hundred and twenty" },
-        // { 528,     "Five hundred and twenty-eight" },
-        // { 632,     "Six hundred and thirty-two" },
-        // { 747,     "Seven hundred and forty-seven" },
-        // { 853,     "Eight hundred and fifty-three" },
-        // { 964,     "Nine hundred and sixty-four" },
-        // { 1000,    "One thousand" },
-        // { 2001,    "Two thousand and one" },
-        // { 2105,    "Two thousand, one hundred and five" },
-        // { 2209,    "Two thousand, two hundred and nine" },
-        // { 3010,    "Three thousand and ten" },
-        // { 3315,    "Three thousand, three hundred and fifteen" },
-        // { 3419,    "Three thousand, four hundred and nineteen" },
-        // { 4020,    "Four thousand and twenty" },
-        // { 4528,    "Four thousand, five hundred and twenty-eight" },
-        // { 1234512, "One million, two hundred thirty-four thousand, five hundred and twelve" },
-        // { 9223372036854775807l, "Nine quintillion, two hundred twenty-three quadrillion, three hundred seventy-two trillion, thirty-six billion, eight hundred fifty-four million, seven hundred seventy-five thousand, eight hundred and seven "}
+       { 28,      "Twenty-eight" },
+       { 32,      "Thirty-two" },
+       { 47,      "Forty-seven" },
+       { 53,      "Fifty-three" },
+       { 64,      "Sixty-four" },
+       { 76,      "Seventy-six" },
+//       { 100,     "One hundred" },
+//       { 201,     "Two hundred and one" },
+//       { 205,     "Two hundred and five" },
+//       { 209,     "Two hundred and nine" },
+//       { 310,     "Three hundred and ten" },
+//       { 315,     "Three hundred and fifteen" },
+//       { 319,     "Three hundred and nineteen" },
+//       { 420,     "Four hundred and twenty" },
+//       { 528,     "Five hundred and twenty-eight" },
+//       { 632,     "Six hundred and thirty-two" },
+//       { 747,     "Seven hundred and forty-seven" },
+//       { 853,     "Eight hundred and fifty-three" },
+//       { 964,     "Nine hundred and sixty-four" },
+//       { 1000,    "One thousand" },
+//       { 2001,    "Two thousand and one" },
+//       { 2105,    "Two thousand, one hundred and five" },
+//       { 2209,    "Two thousand, two hundred and nine" },
+//       { 3010,    "Three thousand and ten" },
+//       { 3315,    "Three thousand, three hundred and fifteen" },
+//       { 3419,    "Three thousand, four hundred and nineteen" },
+//       { 4020,    "Four thousand and twenty" },
+//       { 4528,    "Four thousand, five hundred and twenty-eight" },
+//       { 1234512, "One million, two hundred thirty-four thousand, five hundred and twelve" },
+//       { 9223372036854775807l, "Nine quintillion, two hundred twenty-three quadrillion, three hundred seventy-two trillion, thirty-six billion, eight hundred fifty-four million, seven hundred seventy-five thousand, eight hundred and seven "}
     });
   }
 
-  /*
-  if input < 10, module by 10, look up
-  if input < 100 T = divide by 10, t= module by 10, look up
-  if input < 1000  H = divide by 100, h = module by 100, look up
-  */
 
   public static class Formatter {
 
     public static String execute(final long input) {
-      /* Implementation goes here! */
-      //Module by 10
-      //Lookup
-      //Add to stack
-      //divide by 10
-      //finally pop stack
+      //mod by Pow(10,i) i=1 until input > 0
+      //if mod=0 then if div=input/Pow(10,i-1) < 10 then look-up string
+      //if mod>0 then look-up string
       List<String> list = new LinkedList<String>();
-      long inputVal = input;
-      int pos = 0;
-      long val = 0;
-      Integer I = Integer.parseInt(inputVal + "");
-      Integer T = Integer.parseInt((inputVal / 10) + "");
-      if (TEENS.containsKey(I)) {
-        list.add(TEENS.get(I));
-      } else if (TENS.containsKey(T)) {
-        list.add(TENS.get(T));
-      } else {
-        while (inputVal > 0) {
-          val = inputVal % 10;
-          inputVal = inputVal / 10;
-
-          //System.out.println("val:" + val);
-          I = Integer.parseInt("" + val);
-          if (ONES.containsKey(I)) {
+      int I;
+      long copyInput = input;
+      for(int digitsPlace = 1; copyInput > 0; digitsPlace++){
+        long mod = (long)(copyInput % Math.pow(10, digitsPlace));
+        long div = (long) (copyInput / Math.pow(10, digitsPlace));
+        if(digitsPlace == 1 && div > 0 && div <= 2){ //since we start with 10^1 check for TEENS
+          I = Integer.parseInt("" + copyInput);
+          if(TEENS.containsKey(I)) {
+            list.add(TEENS.get(I));
+            copyInput = 0;
+          }
+          if(mod == 0) {
+            if(TENS.containsKey((int) div)){
+              list.add(TENS.get((int) div));
+              copyInput = 0;
+            }
+          }
+        }
+        if(copyInput == 0) continue;
+        if(mod == 0){
+          I = Integer.parseInt("" + copyInput);
+          if(TEENS.containsKey(I)) list.add(TEENS.get(I));
+          if(TENS.containsKey(I)) list.add(TENS.get(I));
+          copyInput = 0;
+        } else {
+          div = -1; //reset
+          //example input=28, 2nd iteration copyInput=20, digitsPlace=2 then mod=20/100
+          if(digitsPlace > 1) {
+            div = (long) (copyInput / Math.pow(10, digitsPlace - 1));
+          }
+          if(div > 0 && div < 10){
+            I = Integer.parseInt("" + div);
+          }else {
+            I = Integer.parseInt("" + mod);
+          }
+          if (digitsPlace == 1 && ONES.containsKey(I)) {
             list.add(ONES.get(I));
           }
-        }//end of while
-      }
-
+          if (digitsPlace == 2) {
+            if(TEENS.containsKey(I)) list.add(TEENS.get(I));
+            if(TENS.containsKey(I)) list.add(TENS.get(I));
+          }
+          copyInput = copyInput - mod;
+        }
+      }//for
       StringBuilder sb = new StringBuilder();
-      //System.out.println("size:" + list.size());
       if (list.size() > 0) {
         int size = list.size();
-        for (int i = size - 1; i >= 0; i--) {
-          sb.append(list.get(i));
+        for (int i = size - 1, j = 1; i >= 0; i--, j++) {
+          if(j == 1){
+            sb.append(list.get(i));
+          }else {
+            sb.append("-").append(list.get(i).toLowerCase());
+          }
         }//for
       }
-      //System.out.println("sb:" + sb);
       return sb.toString();
     }
-
     private static final Map<Integer, String> ONES;
 
     private static final Map<Integer, String> TEENS;

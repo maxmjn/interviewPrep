@@ -19,7 +19,7 @@
     <commons.lang3>3.7</commons.lang3>
 
     <!--Testing dependencies-->
-    <junit.version>4.12</junit.version>
+    <junit.version>4.13.1</junit.version>
     <powermock.junit4.version>1.7.4</powermock.junit4.version>
 
     <!-- Maven plugin versions -->

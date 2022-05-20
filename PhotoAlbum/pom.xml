@@ -42,7 +42,7 @@
     <!--UTIL-->
     <commons-lang3.version>3.8</commons-lang3.version>
     <commons-collections.version>4.2</commons-collections.version>
-    <gson.version>2.8.5</gson.version>
+    <gson.version>2.8.9</gson.version>
 
     <!--TEST-->
     <junit4.version>4.12</junit4.version>
